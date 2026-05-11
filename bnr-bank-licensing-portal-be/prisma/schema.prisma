@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  APPLICANT
+  REVIEWER
+  APPROVER
+  ADMIN
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  INFO_REQUESTED
+  RESUBMITTED
+  REVIEW_COMPLETED
+  APPROVED
+  REJECTED
+}
+
+enum AuditAction {
+  APPLICATION_CREATED
+  APPLICATION_SUBMITTED
+  REVIEW_STARTED
+  INFO_REQUESTED
+  APPLICATION_RESUBMITTED
+  REVIEW_COMPLETED
+  FINAL_APPROVED
+  FINAL_REJECTED
+  DOCUMENT_UPLOADED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id                String            @id @default(cuid())
+  email             String            @unique
+  passwordHash      String
+  role              UserRole
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  applications      Application[]     @relation("ApplicationApplicant")
+  reviewedApps      Application[]     @relation("ApplicationReviewer")
+  approvedApps      Application[]     @relation("ApplicationApprover")
+  uploadedDocuments ApplicationFile[]
+  auditLogs         AuditLog[]
+}
+
+model Application {
+  id              String            @id @default(cuid())
+  applicantId     String
+  applicant       User              @relation("ApplicationApplicant", fields: [applicantId], references: [id], onDelete: Restrict)
+  institutionName String
+  licenseType     String
+  notes           String?
+  status          ApplicationStatus @default(DRAFT)
+  version         Int               @default(1)
+  riskScore       Int               @default(0)
+  riskLevel       RiskLevel         @default(LOW)
+  riskReasons     Json?
+  reviewedById    String?
+  reviewedBy      User?             @relation("ApplicationReviewer", fields: [reviewedById], references: [id], onDelete: Restrict)
+  reviewComment   String?
+  approvedById    String?
+  approvedBy      User?             @relation("ApplicationApprover", fields: [approvedById], references: [id], onDelete: Restrict)
+  finalDecisionAt DateTime?
+  rejectionReason String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  documents       ApplicationFile[]
+  auditLogs       AuditLog[]
+
+  @@index([applicantId])
+  @@index([status])
+  @@index([reviewedById])
+  @@index([approvedById])
+}
+
+model ApplicationFile {
+  id                 String      @id @default(cuid())
+  applicationId      String
+  application        Application @relation(fields: [applicationId], references: [id], onDelete: Restrict)
+  applicationVersion Int
+  fileName           String
+  mimeType           String
+  fileSizeBytes      Int
+  sha256Hash         String?
+  hashAlgorithm      String      @default("SHA-256")
+  storagePath        String
+  uploadedById       String
+  uploadedBy         User        @relation(fields: [uploadedById], references: [id], onDelete: Restrict)
+  createdAt          DateTime    @default(now())
+
+  @@index([applicationId, applicationVersion])
+  @@index([uploadedById])
+}
+
+model AuditLog {
+  id            String             @id @default(cuid())
+  applicationId String
+  application   Application        @relation(fields: [applicationId], references: [id], onDelete: Restrict)
+  actorUserId   String
+  actorUser     User               @relation(fields: [actorUserId], references: [id], onDelete: Restrict)
+  action        AuditAction
+  beforeStatus  ApplicationStatus?
+  afterStatus   ApplicationStatus?
+  metadata      Json?
+  sequence      Int?
+  previousHash  String?
+  recordHash    String?
+  canonicalPayload Json?
+  requestId     String?
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime           @default(now())
+
+  @@index([applicationId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@index([sequence])
+}

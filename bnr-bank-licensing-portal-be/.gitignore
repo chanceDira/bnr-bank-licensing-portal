@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+
+# Keep environment variables out of version control
+.env
+
+# Prisma generated client
+/generated/prisma
+
+# Local file storage (uploaded documents)
+storage/
