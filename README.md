@@ -157,7 +157,8 @@ npm run test && npm run build && npm run lint
 
 <img width="1918" height="989" alt="Screenshot from 2026-05-11 12-08-13" src="https://github.com/user-attachments/assets/15d09694-8cba-4055-8f2b-bcc8985ead4a" />
 
-<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-09-08" src="https://github.com/user-attachments/assets/ec603d62-5899-4f7e-b988-76ebf83da943" />
-
 <img width="1918" height="989" alt="Screenshot from 2026-05-11 12-09-25" src="https://github.com/user-attachments/assets/1d0ec730-1f0f-4cd7-8c66-7ec288d70fc5" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-26-23" src="https://github.com/user-attachments/assets/03e4bbd2-ada1-4ddb-b576-82f331c8f5f8" />
+
 
