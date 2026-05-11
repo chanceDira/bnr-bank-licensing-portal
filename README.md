@@ -143,3 +143,21 @@ npm run test && npm run build && npm run lint
 | Compliance features (audit chain, risk, fingerprints) | [`docs/compliance.md`](./docs/compliance.md) |
 | Technical decisions and trade-offs | [`docs/decisions.md`](./docs/decisions.md) |
 | Testing strategy | [`docs/testing.md`](./docs/testing.md) |
+
+
+## Screenshots
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-06-55" src="https://github.com/user-attachments/assets/d3da1e26-5e74-455d-b5a8-5a7b3bc5bda2" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-07-34" src="https://github.com/user-attachments/assets/6e5b6d55-2431-453a-8eea-44e8c3e64e41" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-07-46" src="https://github.com/user-attachments/assets/46a83da9-aa4c-48f9-8ebb-2ecc405a04de" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-08-03" src="https://github.com/user-attachments/assets/d761f847-8dcd-4c12-858b-9d1329c86c81" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-08-13" src="https://github.com/user-attachments/assets/15d09694-8cba-4055-8f2b-bcc8985ead4a" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-09-08" src="https://github.com/user-attachments/assets/ec603d62-5899-4f7e-b988-76ebf83da943" />
+
+<img width="1918" height="989" alt="Screenshot from 2026-05-11 12-09-25" src="https://github.com/user-attachments/assets/1d0ec730-1f0f-4cd7-8c66-7ec288d70fc5" />
+
